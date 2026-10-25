@@ -4,46 +4,48 @@
   :root {
     --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
     --font-body: 'DM Sans', 'Noto Sans Myanmar', system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
   }
 
-  body {
-    font-family: var(--font-body);
-    background-color: #0b0d13;
-    color: #e2e8f0;
-    overflow-x: hidden;
-  }
-
-  h1, h2, h3, h4, .font-display {
-    font-family: var(--font-display);
-    letter-spacing: -0.02em;
-  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--font-body); background: #0b0d13; color: #e7edf7; overflow-x: hidden; }
+  button, input, textarea, select { font: inherit; }
+  button { cursor: pointer; }
+  h1, h2, h3, h4, .font-display { font-family: var(--font-display); letter-spacing: -0.025em; }
 }
 
-/* Glass panel styling with hairline border */
-.glass-panel {
-  background-color: rgba(18, 22, 32, 0.65);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-}
+.app-shell { --surface: #10141d; --surface-raised: #151b27; --surface-muted: #0d1119; --border: #263044; --text: #e7edf7; --muted: #8d9ab0; --accent: #56d6e8; --accent-strong: #2db7d3; background: #0b0d13; color: var(--text); }
+.app-shell.theme-light { --surface: #ffffff; --surface-raised: #f4f7fb; --surface-muted: #eef2f7; --border: #dce3ed; --text: #172033; --muted: #617089; --accent: #087f9a; --accent-strong: #05637a; background: #f5f7fb; color: var(--text); }
 
-.glass-panel-hover:hover {
-  background-color: rgba(24, 30, 44, 0.8);
-  border-color: rgba(34, 211, 238, 0.25);
-}
+.app-shell main { width: min(100%, 1280px); padding-top: 2rem; }
+.app-shell header { background: color-mix(in srgb, var(--surface) 92%, transparent); border-color: var(--border); }
+.app-shell footer { background: var(--surface-muted); border-color: var(--border); }
 
-/* Custom scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Shared surface language keeps existing workflows intact while giving every screen one visual system. */
+.app-shell .glass-panel,
+.app-shell [class*="bg-slate-900"],
+.app-shell [class*="bg-[#0c0f16"],
+.app-shell [class*="bg-[#121622"] { background: var(--surface); border-color: var(--border); }
+.app-shell [class*="border-slate-8"], .app-shell [class*="border-slate-7"] { border-color: var(--border); }
+.app-shell [class*="text-white"], .app-shell [class*="text-slate-100"], .app-shell [class*="text-slate-200"] { color: var(--text); }
+.app-shell [class*="text-slate-3"], .app-shell [class*="text-slate-4"] { color: var(--muted); }
+.app-shell.theme-light [class*="bg-[#0b0d13"], .app-shell.theme-light [class*="bg-[#0f121a"], .app-shell.theme-light [class*="bg-[#11141c"] { background: var(--surface); }
+.app-shell.theme-light [class*="bg-slate-950"] { background: #e8edf4; }
+
+.theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border: 1px solid var(--border); border-radius: .55rem; color: var(--muted); background: var(--surface); transition: color .2s, border-color .2s, background .2s; }
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent); background: var(--surface-raised); }
+.theme-toggle svg { width: 1rem; height: 1rem; }
+
+.app-shell button:focus-visible, .app-shell input:focus-visible, .app-shell textarea:focus-visible, .app-shell select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.app-shell .glass-panel-hover:hover { background: var(--surface-raised); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: var(--surface-muted); }
+::-webkit-scrollbar-thumb { background: #3a465c; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #52617b; }
+
+@media (max-width: 640px) {
+  .app-shell main { padding-top: 1.25rem; }
 }
-::-webkit-scrollbar-track {
-  background: #0b0d13;
-}
-::-webkit-scrollbar-thumb {
-  background: #242c3d;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #333e54;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }

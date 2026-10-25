@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Sparkles, Video, FolderKanban, MessageSquare, Plus, Globe, Menu, X } from 'lucide-react';
+import { Sparkles, Video, FolderKanban, Plus, Globe, Menu, X, Sun, Moon } from 'lucide-react';
 
 interface NavbarProps {
   currentScreen: 'dashboard' | 'chat' | 'create' | 'projects' | 'workspace';
   onNavigate: (screen: 'dashboard' | 'chat' | 'create' | 'projects') => void;
   onNewProject: () => void;
+  theme: 'light' | 'dark';
+  onThemeChange: (theme: 'light' | 'dark') => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   currentScreen,
   onNavigate,
   onNewProject,
+  theme,
+  onThemeChange,
 }) => {
   const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -94,6 +98,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Zone 3: Actions (Language Switch & Primary Action) */}
         <div className="flex items-center gap-3 shrink-0">
+          <button
+            onClick={() => onThemeChange(theme === 'dark' ? 'light' : 'dark')}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="theme-toggle"
+          >
+            {theme === 'dark' ? <Sun /> : <Moon />}
+          </button>
+
           {/* Language Switcher */}
           <button
             onClick={toggleLanguage}
